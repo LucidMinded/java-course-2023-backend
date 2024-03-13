@@ -3,10 +3,7 @@ package edu.java.bot.controller;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import edu.java.bot.component.URLParser;
 import edu.java.bot.service.Service;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,51 +15,36 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class StartCommandTest {
-    List<? extends Command> commandsForHelp;
-    List<? extends Command> commands;
     @Mock private Service service;
     @Mock private Update update;
 
-    @BeforeEach
-    void setUp() {
+    @Test
+    void handle_registered() {
+        // Arrange
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
         when(update.message().chat().id()).thenReturn(1L);
-
-        mock(HelpCommand.class);
-        mock(ListCommand.class);
-        mock(StartCommand.class);
-        mock(TrackCommand.class);
-        mock(UntrackCommand.class);
-
-        URLParser urlParser = new URLParser();
-
-        commandsForHelp = List.of(
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
-        );
-
-        commands = List.of(
-            new HelpCommand(commandsForHelp),
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
-        );
-
-    }
-
-    @Test
-    void handle_registered() {
         when(service.isUserRegistered(1L)).thenReturn(true);
-        assertEquals("Nice to see you again!", getMessageText(new StartCommand(service).handle(update)));
+
+        // Act
+        String resultMessageText = getMessageText(new StartCommand(service).handle(update));
+
+        // Assert
+        assertEquals("Nice to see you again!", resultMessageText);
     }
 
     @Test void handle_notRegistered() {
+        // Arrange
+        when(update.message()).thenReturn(mock(Message.class));
+        when(update.message().chat()).thenReturn(mock(Chat.class));
+        when(update.message().chat().id()).thenReturn(1L);
         when(service.isUserRegistered(1L)).thenReturn(false);
-        assertEquals("You have successfully registered!", getMessageText(new StartCommand(service).handle(update)));
+
+        // Act
+        String resultMessageText = getMessageText(new StartCommand(service).handle(update));
+
+        // Assert
+        assertEquals("You have successfully registered!", resultMessageText);
     }
 
 }

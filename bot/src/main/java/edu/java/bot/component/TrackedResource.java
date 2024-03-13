@@ -1,27 +1,16 @@
 package edu.java.bot.component;
 
 public enum TrackedResource {
-    GITHUB {
-        @Override
-        public String getHost() {
-            return "github.com";
-        }
-    },
-    STACKOVERFLOW {
-        @Override
-        public String getHost() {
-            return "stackoverflow.com";
-        }
-    };
+    GITHUB("github.com"),
+    STACKOVERFLOW("stackoverflow.com");
 
-    public static TrackedResource getResourceFromHost(String host) {
-        for (TrackedResource resource : TrackedResource.values()) {
-            if (resource.getHost().equals(host)) {
-                return resource;
-            }
-        }
-        return null;
+    private final String host;
+
+    TrackedResource(String host) {
+        this.host = host;
     }
 
-    public abstract String getHost();
+    public String getHost() {
+        return host;
+    }
 }
