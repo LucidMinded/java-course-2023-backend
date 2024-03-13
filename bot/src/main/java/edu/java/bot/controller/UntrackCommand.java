@@ -2,6 +2,7 @@ package edu.java.bot.controller;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.component.TrackedResource;
 import edu.java.bot.component.URLParser;
 import edu.java.bot.service.Service;
 import edu.java.bot.util.BotUtils;
@@ -25,23 +26,25 @@ import org.springframework.stereotype.Component;
         log.info("Handling /untrack command");
         Long userId = update.message().chat().id();
         String url = getCommandText(update);
+
         URLParser.ParsedURL parsedURL = urlParser.parse(url);
-        if (parsedURL == null) {
+        if (parsedURL == null || parsedURL.host() == null) {
             return BotUtils.createSendMessage(update, "Invalid URL");
         }
+
         boolean removed;
-        switch (parsedURL.host()) {
-            case "github.com":
-                removed = service.removeResource(userId, url); // for now
-                // handle GitHub resource
-                break;
-            case "stackoverflow.com":
-                removed = service.removeResource(userId, url); // for now
-                // handle StackOverflow resource
-                break;
-            default:
-                return BotUtils.createSendMessage(update, "Unsupported resource");
+
+        String urlHost = parsedURL.host();
+        if (urlHost.equals(TrackedResource.GITHUB.getHost())) {
+            removed = service.removeResource(userId, url); // for now
+            // handle GitHub resource
+        } else if (urlHost.equals(TrackedResource.STACKOVERFLOW.getHost())) {
+            removed = service.removeResource(userId, url); // for now
+            // handle StackOverflow resource
+        } else {
+            return BotUtils.createSendMessage(update, "Unsupported resource");
         }
+
         if (removed) {
             return BotUtils.createSendMessage(update, "Resource is no longer being tracked");
         } else {
