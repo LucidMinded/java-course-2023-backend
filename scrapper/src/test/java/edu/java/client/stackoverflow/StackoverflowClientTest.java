@@ -78,6 +78,6 @@ public class StackoverflowClientTest {
                     "}")));
 
         QuestionDto questionDto = stackoverflowClientLocal.getQuestionResponse("1732348").getQuestions().getFirst();
-        Assertions.assertEquals(questionDto.getLastActivityDate(), OffsetDateTime.parse("2024-02-12T17:24:17Z"));
+        Assertions.assertEquals(OffsetDateTime.parse("2024-02-12T17:24:17Z"), questionDto.getLastActivityDate());
     }
 }
