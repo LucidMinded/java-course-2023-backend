@@ -6,7 +6,6 @@ import com.pengrad.telegrambot.model.Update;
 import edu.java.bot.component.URLParser;
 import edu.java.bot.service.Service;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,7 +23,6 @@ class HelpCommandTest {
     @Mock private Service service;
     @Mock private Update update;
 
-    @BeforeEach
     void setUp() {
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
@@ -44,26 +42,24 @@ class HelpCommandTest {
             new TrackCommand(service, urlParser),
             new UntrackCommand(service, urlParser)
         );
-
-        commands = List.of(
-            new HelpCommand(commandsForHelp),
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
-        );
-
     }
 
     @Test
     void handle() {
+        // Arrange
+        setUp();
+
+        // Act
+        String resultMessageText = getMessageText(new HelpCommand(commandsForHelp).handle(update));
+
+        // Assert
         assertEquals(
             "Available commands:\n" +
                 "/list - List all tracked resources\n" +
                 "/start - Register\n" +
                 "/track - Start tracking a new resource\n" +
                 "/untrack - Stop tracking a resource\n",
-            getMessageText(new HelpCommand(commandsForHelp).handle(update))
+            resultMessageText
         );
     }
 }
