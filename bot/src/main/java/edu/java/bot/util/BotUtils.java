@@ -6,11 +6,11 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class BotUtils {
-    public static SendMessage createSendMessage(Update update, String text) {
+    public SendMessage createSendMessage(Update update, String text) {
         return new SendMessage(getUserId(update), text);
     }
 
-    public static long getUserId(Update update) {
+    public long getUserId(Update update) {
         return update.message().chat().id();
     }
 }

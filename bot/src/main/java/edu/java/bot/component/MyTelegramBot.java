@@ -62,8 +62,11 @@ import org.springframework.stereotype.Component;
     public void onException(TelegramException e) {
         if (e.response() != null) {
             // got bad response from telegram
-            log.error("TelegramException occurred. Error code: " + e.response().errorCode() + ". Description: "
-                + e.response().description());
+            log.error(
+                "TelegramException occurred. Error code: {}. Description: {}",
+                e.response().errorCode(),
+                e.response().description()
+            );
         } else {
             // probably network error
             log.error("TelegramException occurred. No response");

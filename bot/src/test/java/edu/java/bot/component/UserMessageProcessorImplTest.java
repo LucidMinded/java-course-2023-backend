@@ -26,6 +26,7 @@ class UserMessageProcessorImplTest {
     List<? extends Command> commands;
     @Mock private Service service;
     @Mock private Update update;
+
     private UserMessageProcessorImpl userMessageProcessor;
 
     void setUp() {
