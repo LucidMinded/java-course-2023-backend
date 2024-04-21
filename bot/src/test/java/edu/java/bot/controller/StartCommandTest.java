@@ -24,13 +24,12 @@ public class StartCommandTest {
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
         when(update.message().chat().id()).thenReturn(1L);
-        when(botService.isChatRegistered(1L)).thenReturn(true);
 
         // Act
         String resultMessageText = getMessageText(new StartCommand(botService).handle(update));
 
         // Assert
-        assertEquals("Nice to see you again!", resultMessageText);
+        assertEquals("You have successfully registered!", resultMessageText);
     }
 
     @Test void handle_notRegistered() {
@@ -38,7 +37,6 @@ public class StartCommandTest {
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
         when(update.message().chat().id()).thenReturn(1L);
-        when(botService.isChatRegistered(1L)).thenReturn(false);
 
         // Act
         String resultMessageText = getMessageText(new StartCommand(botService).handle(update));

@@ -33,7 +33,7 @@ public class StackoverflowClientTest {
     public void test() {
         StackoverflowClient stackoverflowClientLocal = ClientConfiguration.stackoverflowClient("http://localhost:8080");
 
-        stubFor(get(urlEqualTo("/questions/1732348"))
+        stubFor(get(urlEqualTo("/questions/1732348?site=stackoverflow"))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")

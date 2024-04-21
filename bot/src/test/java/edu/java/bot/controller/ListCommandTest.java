@@ -33,8 +33,8 @@ import static org.mockito.Mockito.when;
 
         // Assert
         assertEquals(
-            "You are tracking the following resources:\n" + resources.get(0) + "\n" +
-                resources.get(1) + "\n",
+            "You are tracking the following links:\n" + resources.get(0) + "\n\n" +
+                resources.get(1) + "\n\n",
             resultMessageText
         );
     }
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.when;
 
         // Assert
         assertEquals(
-            "You are not tracking any resources",
+            "You are not tracking any links",
             resultMessageText
         );
     }
