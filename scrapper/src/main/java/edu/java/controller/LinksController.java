@@ -73,7 +73,7 @@ public class LinksController {
             linkService.add(id, uri);
             return new LinkResponse(id, uri.toString());
         } catch (URISyntaxException e) {
-            log.debug("Invalid link {}", addLinkRequest.getLink());
+            log.debug("Invalid link in addLink {}", addLinkRequest.getLink());
             // TODO: return error response
             return null;
         }
@@ -106,7 +106,7 @@ public class LinksController {
             linkService.remove(id, uri);
             return new LinkResponse(id, uri.toString());
         } catch (URISyntaxException e) {
-            log.debug("Invalid link {}", removeLinkRequest.getLink());
+            log.debug("Invalid link in removeLink {}", removeLinkRequest.getLink());
             // TODO: return error response
             return null;
         }

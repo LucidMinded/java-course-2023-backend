@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 public class JdbcChatDao implements ChatDao {
     private final JdbcTemplate jdbcTemplate;
 
+    private final static String ID = "id";
+
     @Override
     public Boolean add(Long id) {
         return jdbcTemplate.update("INSERT INTO chat (id) VALUES (?) ON CONFLICT DO NOTHING", id) > 0;
@@ -26,14 +28,14 @@ public class JdbcChatDao implements ChatDao {
     public ChatDto findById(Long id) {
         return jdbcTemplate.queryForObject(
             "SELECT * FROM chat WHERE id = ?",
-            (rs, rowNum) -> new ChatDto(rs.getLong("id")),
+            (rs, rowNum) -> new ChatDto(rs.getLong(ID)),
             id
         );
     }
 
     @Override
     public List<ChatDto> findAll() {
-        return jdbcTemplate.query("SELECT * FROM chat", (rs, rowNum) -> new ChatDto(rs.getLong("id")));
+        return jdbcTemplate.query("SELECT * FROM chat", (rs, rowNum) -> new ChatDto(rs.getLong(ID)));
     }
 
     @Override

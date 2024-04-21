@@ -9,7 +9,6 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.request.SetMyCommands;
 import com.pengrad.telegrambot.response.BaseResponse;
-import edu.java.URLParser;
 import edu.java.bot.configuration.ApplicationConfig;
 import edu.java.bot.controller.Command;
 import java.util.ArrayList;

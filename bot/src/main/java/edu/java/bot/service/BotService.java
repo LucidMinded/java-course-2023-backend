@@ -6,7 +6,6 @@ import edu.java.dto.scrapper.request.RemoveLinkRequest;
 import edu.java.dto.scrapper.response.LinkResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.net.URI;
 
 @Service
 @AllArgsConstructor

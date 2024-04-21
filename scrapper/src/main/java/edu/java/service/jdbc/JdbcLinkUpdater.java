@@ -37,7 +37,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
     private final LinkService linkService;
     private final ChatService chatService;
 
-    private final Map<String, BiFunction<LinkDto, URLParser.ParsedURL, Boolean>> UPDATERS = Map.of(
+    private final Map<String, BiFunction<LinkDto, URLParser.ParsedURL, Boolean>> updaters = Map.of(
         TrackedLink.GITHUB.getHost(), this::githubUpdate,
         TrackedLink.STACKOVERFLOW.getHost(), this::stackoverflowUpdate
     );
@@ -56,7 +56,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
             }
 
             try {
-                var updater = UPDATERS.get(parsedURL.host());
+                var updater = updaters.get(parsedURL.host());
                 if (updater != null) {
                     cntUpdated += updater.apply(link, parsedURL) ? 1 : 0;
                 } else {

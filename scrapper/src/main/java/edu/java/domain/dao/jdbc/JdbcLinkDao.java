@@ -14,9 +14,15 @@ import org.springframework.stereotype.Repository;
 public class JdbcLinkDao implements LinkDao {
     private final JdbcTemplate jdbcTemplate;
 
+    private final static String ID = "id";
+    private final static String URL = "url";
+    private final static String UPDATED_AT = "updated_at";
+    private final static String LAST_ACTIVITY = "last_activity";
+
     @Override
     public Boolean add(String url) {
-        return jdbcTemplate.update("INSERT INTO link (url, updated_at, last_activity) VALUES (?, ?, ?) ON CONFLICT DO NOTHING",
+        return jdbcTemplate.update(
+            "INSERT INTO link (url, updated_at, last_activity) VALUES (?, ?, ?) ON CONFLICT DO NOTHING",
             url,
             OffsetDateTime.now(),
             OffsetDateTime.now()
@@ -33,10 +39,10 @@ public class JdbcLinkDao implements LinkDao {
         return jdbcTemplate.query(
             "SELECT * FROM link",
             (rs, rowNum) -> new LinkDto(
-                rs.getLong("id"),
-                rs.getString("url"),
-                rs.getObject("updated_at", OffsetDateTime.class),
-                rs.getObject("last_activity", OffsetDateTime.class)
+                rs.getLong(ID),
+                rs.getString(URL),
+                rs.getObject(UPDATED_AT, OffsetDateTime.class),
+                rs.getObject(LAST_ACTIVITY, OffsetDateTime.class)
             )
         );
     }
@@ -46,10 +52,10 @@ public class JdbcLinkDao implements LinkDao {
         return jdbcTemplate.queryForObject(
             "SELECT * FROM link WHERE id = ?",
             (rs, rowNum) -> new LinkDto(
-                rs.getLong("id"),
-                rs.getString("url"),
-                rs.getObject("updated_at", OffsetDateTime.class),
-                rs.getObject("last_activity", OffsetDateTime.class)
+                rs.getLong(ID),
+                rs.getString(URL),
+                rs.getObject(UPDATED_AT, OffsetDateTime.class),
+                rs.getObject(LAST_ACTIVITY, OffsetDateTime.class)
             ),
             id
         );
@@ -60,10 +66,10 @@ public class JdbcLinkDao implements LinkDao {
         List<LinkDto> linkDtoList = jdbcTemplate.query(
             "SELECT * FROM link WHERE url = ?",
             (rs, rowNum) -> new LinkDto(
-                rs.getLong("id"),
-                rs.getString("url"),
-                rs.getObject("updated_at", OffsetDateTime.class),
-                rs.getObject("last_activity", OffsetDateTime.class)
+                rs.getLong(ID),
+                rs.getString(URL),
+                rs.getObject(UPDATED_AT, OffsetDateTime.class),
+                rs.getObject(LAST_ACTIVITY, OffsetDateTime.class)
             ),
             url
         );
@@ -75,10 +81,10 @@ public class JdbcLinkDao implements LinkDao {
         return jdbcTemplate.query(
             "SELECT * FROM link WHERE updated_at < ?",
             (rs, rowNum) -> new LinkDto(
-                rs.getLong("id"),
-                rs.getString("url"),
-                rs.getObject("updated_at", OffsetDateTime.class),
-                rs.getObject("last_activity", OffsetDateTime.class)
+                rs.getLong(ID),
+                rs.getString(URL),
+                rs.getObject(UPDATED_AT, OffsetDateTime.class),
+                rs.getObject(LAST_ACTIVITY, OffsetDateTime.class)
             ),
             updatedBefore
         );

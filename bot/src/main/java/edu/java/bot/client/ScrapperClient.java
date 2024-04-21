@@ -4,8 +4,6 @@ import edu.java.dto.scrapper.request.AddLinkRequest;
 import edu.java.dto.scrapper.request.RemoveLinkRequest;
 import edu.java.dto.scrapper.response.LinkResponse;
 import edu.java.dto.scrapper.response.ListLinksResponse;
-import io.swagger.v3.oas.models.links.Link;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;

@@ -1,7 +1,6 @@
 package edu.java.domain.dao.dto;
 
 import java.time.OffsetDateTime;
-import io.swagger.v3.oas.models.links.Link;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

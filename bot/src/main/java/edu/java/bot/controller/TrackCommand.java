@@ -29,9 +29,9 @@ import org.springframework.stereotype.Component;
             return BotUtils.createSendMessage(update, "Invalid URL");
         }
 
-        try{
+        try {
             botService.addLink(BotUtils.getUserId(update), url);
-        } catch (Exception e){
+        } catch (Exception e) {
             return BotUtils.createSendMessage(update, "Exception occurred while trying to add link");
         }
         return BotUtils.createSendMessage(update, "Resource is now being tracked");

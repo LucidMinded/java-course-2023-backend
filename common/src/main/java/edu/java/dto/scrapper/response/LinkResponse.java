@@ -1,7 +1,6 @@
 package edu.java.dto.scrapper.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.net.URI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
