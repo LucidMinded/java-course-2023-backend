@@ -44,7 +44,7 @@ import org.springframework.stereotype.Component;
     public int process(List<Update> updates) {
         log.info("Received {} updates", updates.size());
         updates.forEach(update -> {
-            if (update.message() != null) {
+            if (update.message() != null && update.message().text() != null) {
                 log.info("Received message: {}", update.message().text());
                 telegramBotSDK.execute(userMessageProcessor.process(update));
             } else {
