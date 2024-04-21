@@ -6,7 +6,10 @@ import com.pengrad.telegrambot.TelegramException;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.BaseRequest;
 import com.pengrad.telegrambot.request.SetMyCommands;
+import com.pengrad.telegrambot.response.BaseResponse;
+import edu.java.URLParser;
 import edu.java.bot.configuration.ApplicationConfig;
 import edu.java.bot.controller.Command;
 import java.util.ArrayList;
@@ -17,17 +20,14 @@ import org.springframework.stereotype.Component;
 @Component @Slf4j public class MyTelegramBot implements UpdatesListener, ExceptionHandler {
     private final ApplicationConfig applicationConfig;
     private final TelegramBot telegramBotSDK;
-    private final URLParser urlParser;
     private final UserMessageProcessor userMessageProcessor;
 
     public MyTelegramBot(
         ApplicationConfig applicationConfig,
-        URLParser urlParser,
         UserMessageProcessor userMessageProcessor
     ) {
         this.telegramBotSDK = new TelegramBot(applicationConfig.telegramToken());
         this.applicationConfig = applicationConfig;
-        this.urlParser = urlParser;
         this.userMessageProcessor = userMessageProcessor;
 
         telegramBotSDK.setUpdatesListener(this, this);
@@ -71,5 +71,9 @@ import org.springframework.stereotype.Component;
             // probably network error
             log.error("TelegramException occurred. No response");
         }
+    }
+
+    public <T extends BaseRequest<T, R>, R extends BaseResponse> R execute(BaseRequest<T, R> request) {
+        return telegramBotSDK.execute(request);
     }
 }

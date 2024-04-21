@@ -121,7 +121,7 @@
 
         <dependency>
             <groupId>edu.java</groupId>
-            <artifactId>models</artifactId>
+            <artifactId>common</artifactId>
             <version>${revision}</version>
         </dependency>
 

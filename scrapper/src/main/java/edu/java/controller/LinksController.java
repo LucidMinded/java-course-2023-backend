@@ -5,21 +5,33 @@ import edu.java.dto.scrapper.request.RemoveLinkRequest;
 import edu.java.dto.scrapper.response.ApiErrorResponse;
 import edu.java.dto.scrapper.response.LinkResponse;
 import edu.java.dto.scrapper.response.ListLinksResponse;
+import edu.java.service.LinkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/links")
+@Slf4j
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/links")
 public class LinksController {
+    private final LinkService linkService;
+
     @Operation(summary = "Добавить отслеживание ссылки", description = "", tags = {})
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",
@@ -33,7 +45,10 @@ public class LinksController {
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @GetMapping
     public ListLinksResponse getLinks(@RequestHeader("Tg-Chat-Id") Long tgChatId) {
-        return new ListLinksResponse(null, null);
+        log.debug("Getting links for chat {}", tgChatId);
+        List<LinkResponse> links = linkService.listAllByChatId(tgChatId).stream()
+            .map(linkDto -> new LinkResponse(linkDto.getId(), linkDto.getUrl())).toList();
+        return new ListLinksResponse(links, links.size());
     }
 
     @Operation(summary = "Получить все отслеживаемые ссылки", description = "", tags = {})
@@ -52,7 +67,16 @@ public class LinksController {
         @RequestHeader("Tg-Chat-Id") Long id,
         @Valid @RequestBody AddLinkRequest addLinkRequest
     ) {
-        return new LinkResponse(null, null);
+        log.debug("Adding link {} for chat {}", addLinkRequest.getLink(), id);
+        try {
+            URI uri = new URI(addLinkRequest.getLink());
+            linkService.add(id, uri);
+            return new LinkResponse(id, uri.toString());
+        } catch (URISyntaxException e) {
+            log.debug("Invalid link {}", addLinkRequest.getLink());
+            // TODO: return error response
+            return null;
+        }
     }
 
     @Operation(summary = "Убрать отслеживание ссылки", description = "", tags = {})
@@ -76,7 +100,16 @@ public class LinksController {
         @RequestHeader("Tg-Chat-Id") Long id,
         @Valid @RequestBody RemoveLinkRequest removeLinkRequest
     ) {
-        return new LinkResponse(null, null);
+        log.debug("Removing link {} for chat {}", removeLinkRequest.getLink(), id);
+        try {
+            URI uri = new URI(removeLinkRequest.getLink());
+            linkService.remove(id, uri);
+            return new LinkResponse(id, uri.toString());
+        } catch (URISyntaxException e) {
+            log.debug("Invalid link {}", removeLinkRequest.getLink());
+            // TODO: return error response
+            return null;
+        }
     }
 
 }

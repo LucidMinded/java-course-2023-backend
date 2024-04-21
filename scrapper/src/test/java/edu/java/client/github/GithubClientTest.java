@@ -38,69 +38,71 @@ public class GithubClientTest {
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")
-                .withBody("[\n" +
-                    "    {\n" +
-                    "        \"id\": \"22249084964\",\n" +
-                    "        \"type\": \"PushEvent\",\n" +
-                    "        \"actor\": {\n" +
-                    "            \"id\": 583231,\n" +
-                    "            \"login\": \"octocat\",\n" +
-                    "            \"display_login\": \"octocat\",\n" +
-                    "            \"gravatar_id\": \"\",\n" +
-                    "            \"url\": \"https://api.github.com/users/octocat\",\n" +
-                    "            \"avatar_url\": \"https://avatars.githubusercontent.com/u/583231?v=4\"\n" +
-                    "        },\n" +
-                    "        \"repo\": {\n" +
-                    "            \"id\": 1296269,\n" +
-                    "            \"name\": \"octocat/Hello-World\",\n" +
-                    "            \"url\": \"https://api.github.com/repos/octocat/Hello-World\"\n" +
-                    "        },\n" +
-                    "        \"payload\": {\n" +
-                    "            \"push_id\": 10115855396,\n" +
-                    "            \"size\": 1,\n" +
-                    "            \"distinct_size\": 1,\n" +
-                    "            \"ref\": \"refs/heads/master\",\n" +
-                    "            \"head\": \"7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300\",\n" +
-                    "            \"before\": \"883efe034920928c47fe18598c01249d1a9fdabd\",\n" +
-                    "            \"commits\": [\n" +
-                    "                {\n" +
-                    "                    \"sha\": \"7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300\",\n" +
-                    "                    \"author\": {\n" +
-                    "                        \"email\": \"octocat@github.com\",\n" +
-                    "                        \"name\": \"Monalisa Octocat\"\n" +
-                    "                    },\n" +
-                    "                    \"message\": \"commit\",\n" +
-                    "                    \"distinct\": true,\n" +
-                    "                    \"url\": \"https://api.github.com/repos/octocat/Hello-World/commits/7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300\"\n" +
-                    "                }\n" +
-                    "            ]\n" +
-                    "        },\n" +
-                    "        \"public\": true,\n" +
-                    "        \"created_at\": \"2022-06-09T12:47:28Z\"\n" +
-                    "    },\n" +
-                    "    {\n" +
-                    "        \"id\": \"22237752260\",\n" +
-                    "        \"type\": \"WatchEvent\",\n" +
-                    "        \"actor\": {\n" +
-                    "            \"id\": 583231,\n" +
-                    "            \"login\": \"octocat\",\n" +
-                    "            \"display_login\": \"octocat\",\n" +
-                    "            \"gravatar_id\": \"\",\n" +
-                    "            \"url\": \"https://api.github.com/users/octocat\",\n" +
-                    "            \"avatar_url\": \"https://avatars.githubusercontent.com/u/583231?v=4\"\n" +
-                    "        },\n" +
-                    "        \"repo\": {\n" +
-                    "            \"id\": 1296269,\n" +
-                    "            \"name\": \"octocat/Hello-World\",\n" +
-                    "            \"url\": \"https://api.github.com/repos/octocat/Hello-World\"\n" +
-                    "        },\n" +
-                    "        \"payload\": {\n" +
-                    "            \"action\": \"started\"\n" +
-                    "        },\n" +
-                    "        \"public\": true,\n" +
-                    "        \"created_at\": \"2022-06-08T23:29:25Z\"\n" +
-                    "    }\n" +
-                    "]\n")));
+                .withBody("""
+                    [
+                        {
+                            "id": "22249084964",
+                            "type": "PushEvent",
+                            "actor": {
+                                "id": 583231,
+                                "login": "octocat",
+                                "display_login": "octocat",
+                                "gravatar_id": "",
+                                "url": "https://api.github.com/users/octocat",
+                                "avatar_url": "https://avatars.githubusercontent.com/u/583231?v=4"
+                            },
+                            "repo": {
+                                "id": 1296269,
+                                "name": "octocat/Hello-World",
+                                "url": "https://api.github.com/repos/octocat/Hello-World"
+                            },
+                            "payload": {
+                                "push_id": 10115855396,
+                                "size": 1,
+                                "distinct_size": 1,
+                                "ref": "refs/heads/master",
+                                "head": "7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300",
+                                "before": "883efe034920928c47fe18598c01249d1a9fdabd",
+                                "commits": [
+                                    {
+                                        "sha": "7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300",
+                                        "author": {
+                                            "email": "octocat@github.com",
+                                            "name": "Monalisa Octocat"
+                                        },
+                                        "message": "commit",
+                                        "distinct": true,
+                                        "url": "https://api.github.com/repos/octocat/Hello-World/commits/7a8f3ac80e2ad2f6842cb86f576d4bfe2c03e300"
+                                    }
+                                ]
+                            },
+                            "public": true,
+                            "created_at": "2022-06-09T12:47:28Z"
+                        },
+                        {
+                            "id": "22237752260",
+                            "type": "WatchEvent",
+                            "actor": {
+                                "id": 583231,
+                                "login": "octocat",
+                                "display_login": "octocat",
+                                "gravatar_id": "",
+                                "url": "https://api.github.com/users/octocat",
+                                "avatar_url": "https://avatars.githubusercontent.com/u/583231?v=4"
+                            },
+                            "repo": {
+                                "id": 1296269,
+                                "name": "octocat/Hello-World",
+                                "url": "https://api.github.com/repos/octocat/Hello-World"
+                            },
+                            "payload": {
+                                "action": "started"
+                            },
+                            "public": true,
+                            "created_at": "2022-06-08T23:29:25Z"
+                        }
+                    ]
+                    """)));
 
         List<RepositoryEventDto> events = githubClientLocal.repoEvents("octocat", "Hello-World");
         events.removeIf(Objects::isNull);

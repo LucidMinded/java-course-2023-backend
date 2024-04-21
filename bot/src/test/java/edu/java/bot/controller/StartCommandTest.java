@@ -3,7 +3,7 @@ package edu.java.bot.controller;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import edu.java.bot.service.Service;
+import edu.java.bot.service.BotService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class StartCommandTest {
-    @Mock private Service service;
+    @Mock private BotService botService;
     @Mock private Update update;
 
     @Test
@@ -24,10 +24,10 @@ public class StartCommandTest {
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
         when(update.message().chat().id()).thenReturn(1L);
-        when(service.isUserRegistered(1L)).thenReturn(true);
+        when(botService.isChatRegistered(1L)).thenReturn(true);
 
         // Act
-        String resultMessageText = getMessageText(new StartCommand(service).handle(update));
+        String resultMessageText = getMessageText(new StartCommand(botService).handle(update));
 
         // Assert
         assertEquals("Nice to see you again!", resultMessageText);
@@ -38,10 +38,10 @@ public class StartCommandTest {
         when(update.message()).thenReturn(mock(Message.class));
         when(update.message().chat()).thenReturn(mock(Chat.class));
         when(update.message().chat().id()).thenReturn(1L);
-        when(service.isUserRegistered(1L)).thenReturn(false);
+        when(botService.isChatRegistered(1L)).thenReturn(false);
 
         // Act
-        String resultMessageText = getMessageText(new StartCommand(service).handle(update));
+        String resultMessageText = getMessageText(new StartCommand(botService).handle(update));
 
         // Assert
         assertEquals("You have successfully registered!", resultMessageText);
