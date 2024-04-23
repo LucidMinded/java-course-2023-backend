@@ -12,14 +12,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class JdbcChatLinkDao implements ChatLinkDao {
-    private final JdbcTemplate jdbcTemplate;
-
     private final static String ID = "id";
     private final static String URL = "url";
     private final static String UPDATED_AT = "updated_at";
     private final static String LAST_ACTIVITY = "last_activity";
     private final static String CHAT_ID = "chat_id";
     private final static String LINK_ID = "link_id";
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public Boolean add(Long chatId, Long linkId) {
