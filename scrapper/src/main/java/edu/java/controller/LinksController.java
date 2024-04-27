@@ -32,12 +32,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinksController {
     private final LinkService linkService;
 
-    @Operation(summary = "Добавить отслеживание ссылки", description = "", tags = {})
+    @Operation(summary = "Получить все отслеживаемые ссылки", description = "", tags = {})
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",
-                     description = "Ссылка успешно добавлена",
+                     description = "Ссылки успешно получены",
                      content = @Content(mediaType = "application/json",
-                                        schema = @Schema(implementation = LinkResponse.class))),
+                                        schema = @Schema(implementation = ListLinksResponse.class))),
 
         @ApiResponse(responseCode = "400",
                      description = "Некорректные параметры запроса",
@@ -51,12 +51,12 @@ public class LinksController {
         return new ListLinksResponse(links, links.size());
     }
 
-    @Operation(summary = "Получить все отслеживаемые ссылки", description = "", tags = {})
+    @Operation(summary = "Добавить отслеживание ссылки", description = "", tags = {})
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",
-                     description = "Ссылки успешно получены",
+                     description = "Ссылка успешно добавлена",
                      content = @Content(mediaType = "application/json",
-                                        schema = @Schema(implementation = ListLinksResponse.class))),
+                                        schema = @Schema(implementation = LinkResponse.class))),
 
         @ApiResponse(responseCode = "400",
                      description = "Некорректные параметры запроса",
