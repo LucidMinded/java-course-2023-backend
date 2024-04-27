@@ -26,7 +26,7 @@ public record ApplicationConfig(
         return clientFactory.createClient(clientClass);
     }
 
-    public ScrapperClient botClient(String botUrl) {
+    public ScrapperClient scrapperClient(String botUrl) {
         return createClient(ScrapperClient.class, Map.of(
             "Content-Type", ScrapperClientConfig.CONTENT_TYPE,
             "Accept", ScrapperClientConfig.ACCEPT
@@ -34,7 +34,7 @@ public record ApplicationConfig(
     }
 
     @Bean
-    public ScrapperClient botClient() {
-        return botClient(ScrapperClientConfig.API_URL);
+    public ScrapperClient scrapperClient() {
+        return scrapperClient(ScrapperClientConfig.API_URL);
     }
 }
