@@ -5,5 +5,7 @@
     "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-    <suppress files="[\\/]scrapper[\\/]src[\\/]main[\\/]java[\\/]edu[\\/]java[\\/]scrapper[\\/]domain[\\/]jooq[\\/].*\.java$" checks=".*"/>
+    <suppress
+        files="[\\/]scrapper[\\/]src[\\/]main[\\/]java[\\/]edu[\\/]java[\\/]scrapper[\\/]domain[\\/]jooq[\\/].*\.java$"
+        checks=".*"/>
 </suppressions>

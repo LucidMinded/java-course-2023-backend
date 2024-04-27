@@ -1,4 +1,4 @@
-package edu.java.service.jdbc;
+package edu.java.service;
 
 import edu.java.GithubPathParser;
 import edu.java.StackoverflowPathParser;
@@ -13,9 +13,6 @@ import edu.java.configuration.ApplicationConfig;
 import edu.java.domain.dao.dto.ChatDto;
 import edu.java.domain.dao.dto.LinkDto;
 import edu.java.dto.bot.request.LinkUpdateRequest;
-import edu.java.service.ChatService;
-import edu.java.service.LinkService;
-import edu.java.service.LinkUpdater;
 import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class JdbcLinkUpdater implements LinkUpdater {
+public class LinkUpdaterImpl implements LinkUpdater {
     private final ApplicationConfig applicationConfig;
     private final GithubClient githubClient;
     private final StackoverflowClient stackoverflowClient;

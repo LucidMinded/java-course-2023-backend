@@ -7,9 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcLinkDao implements LinkDao {
     private final static String ID = "id";

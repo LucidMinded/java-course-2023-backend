@@ -1,5 +1,6 @@
 package edu.java.domain.dao.dto;
 
+import edu.java.domain.dao.jpa.model.Link;
 import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +20,12 @@ public class LinkDto {
         this.url = linkDto.getUrl();
         this.updatedAt = linkDto.getUpdatedAt();
         this.lastActivity = linkDto.getLastActivity();
+    }
+
+    public LinkDto(Link link) {
+        this.id = link.getId();
+        this.url = link.getUrl();
+        this.updatedAt = link.getUpdatedAt();
+        this.lastActivity = link.getLastActivity();
     }
 }
