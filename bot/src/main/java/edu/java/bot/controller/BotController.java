@@ -36,7 +36,10 @@ public class BotController {
 
         for (Long chatId : chatIds) {
             // send message to chat with chatId
-            myTelegramBot.execute(new SendMessage(chatId, description + " " + url));
+            myTelegramBot.execute(new SendMessage(
+                chatId,
+                "There is an update at " + url + "\n\nDetails:\n" + description
+            ));
         }
     }
 }

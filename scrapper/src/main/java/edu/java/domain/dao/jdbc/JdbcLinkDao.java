@@ -12,12 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class JdbcLinkDao implements LinkDao {
-    private final JdbcTemplate jdbcTemplate;
-
     private final static String ID = "id";
     private final static String URL = "url";
     private final static String UPDATED_AT = "updated_at";
     private final static String LAST_ACTIVITY = "last_activity";
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public Boolean add(String url) {

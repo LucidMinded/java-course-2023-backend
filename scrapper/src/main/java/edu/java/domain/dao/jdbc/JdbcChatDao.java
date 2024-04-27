@@ -10,9 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class JdbcChatDao implements ChatDao {
-    private final JdbcTemplate jdbcTemplate;
-
     private final static String ID = "id";
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public Boolean add(Long id) {

@@ -85,11 +85,10 @@ public class JdbcLinkUpdater implements LinkUpdater {
                 botClient.updates(new LinkUpdateRequest(
                     link.getId(),
                     link.getUrl(),
-                    "Update",
+                    responseDto.toString(),
                     chatService.listAllByLinkId(link.getId()).stream().map(ChatDto::getId).toList()
                 ));
                 link.setLastActivity(responseLastActivity);
-                linkService.update(link);
                 return true;
             }
         }
@@ -115,7 +114,7 @@ public class JdbcLinkUpdater implements LinkUpdater {
                     botClient.updates(new LinkUpdateRequest(
                         link.getId(),
                         link.getUrl(),
-                        event.getType(),
+                        event.toString(),
                         chatService.listAllByLinkId(link.getId()).stream().map(ChatDto::getId).toList()
                     ));
                     link.setLastActivity(event.getCreatedAt());
