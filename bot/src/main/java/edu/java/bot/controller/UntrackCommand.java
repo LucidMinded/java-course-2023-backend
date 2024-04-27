@@ -2,17 +2,15 @@ package edu.java.bot.controller;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.component.TrackedResource;
-import edu.java.bot.component.URLParser;
-import edu.java.bot.service.Service;
+import edu.java.URLParser;
+import edu.java.bot.service.BotService;
 import edu.java.bot.util.BotUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component @AllArgsConstructor @Slf4j public class UntrackCommand implements Command {
-    private final Service service;
-    private final URLParser urlParser;
+    private final BotService botService;
 
     @Override public String command() {
         return "/untrack";
@@ -27,28 +25,16 @@ import org.springframework.stereotype.Component;
         Long userId = update.message().chat().id();
         String url = getCommandText(update);
 
-        URLParser.ParsedURL parsedURL = urlParser.parse(url);
+        URLParser.ParsedURL parsedURL = URLParser.parse(url);
         if (parsedURL == null || parsedURL.host() == null) {
             return BotUtils.createSendMessage(update, "Invalid URL");
         }
 
-        boolean removed;
-
-        String urlHost = parsedURL.host();
-        if (urlHost.equals(TrackedResource.GITHUB.getHost())) {
-            removed = service.removeResource(userId, url); // for now
-            // handle GitHub resource
-        } else if (urlHost.equals(TrackedResource.STACKOVERFLOW.getHost())) {
-            removed = service.removeResource(userId, url); // for now
-            // handle StackOverflow resource
-        } else {
-            return BotUtils.createSendMessage(update, "Unsupported resource");
+        try {
+            botService.removeLink(userId, url);
+        } catch (Exception e) {
+            return BotUtils.createSendMessage(update, "Exception occurred while trying to remove link");
         }
-
-        if (removed) {
-            return BotUtils.createSendMessage(update, "Resource is no longer being tracked");
-        } else {
-            return BotUtils.createSendMessage(update, "Resource was not being tracked");
-        }
+        return BotUtils.createSendMessage(update, "Resource is no longer being tracked");
     }
 }
