@@ -4,7 +4,9 @@ import edu.java.domain.dao.dto.LinkDto;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.Collection;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface LinkService {
     LinkDto add(long tgChatId, URI url);
 

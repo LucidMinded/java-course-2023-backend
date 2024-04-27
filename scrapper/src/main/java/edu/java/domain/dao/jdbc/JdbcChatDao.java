@@ -5,9 +5,7 @@ import edu.java.domain.dao.dto.ChatDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcChatDao implements ChatDao {
     private final static String ID = "id";

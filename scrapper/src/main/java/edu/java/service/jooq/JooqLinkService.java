@@ -1,11 +1,11 @@
-package edu.java.service.jdbc;
+package edu.java.service.jooq;
 
 import edu.java.domain.dao.ChatLinkDao;
 import edu.java.domain.dao.LinkDao;
 import edu.java.service.jdbcjooqcommon.JdbcJooqCommonLinkService;
 
-public class JdbcLinkService extends JdbcJooqCommonLinkService {
-    public JdbcLinkService(LinkDao linkDao, ChatLinkDao chatLinkDao) {
+public class JooqLinkService extends JdbcJooqCommonLinkService {
+    public JooqLinkService(LinkDao linkDao, ChatLinkDao chatLinkDao) {
         super(linkDao, chatLinkDao);
     }
 }

@@ -10,12 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Repository;
 import static edu.java.scrapper.domain.jooq.Tables.CHAT;
 
-@Primary
-@Repository
 @RequiredArgsConstructor
 public class JooqChatDao implements ChatDao {
     private final DSLContext dslContext;
