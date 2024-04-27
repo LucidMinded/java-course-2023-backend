@@ -3,8 +3,7 @@ package edu.java.bot.controller;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import edu.java.bot.component.URLParser;
-import edu.java.bot.service.Service;
+import edu.java.bot.service.BotService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +19,7 @@ class HelpCommandTest {
 
     List<? extends Command> commandsForHelp;
     List<? extends Command> commands;
-    @Mock private Service service;
+    @Mock private BotService botService;
     @Mock private Update update;
 
     void setUp() {
@@ -34,13 +33,11 @@ class HelpCommandTest {
         mock(TrackCommand.class);
         mock(UntrackCommand.class);
 
-        URLParser urlParser = new URLParser();
-
         commandsForHelp = List.of(
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
+            new ListCommand(botService),
+            new StartCommand(botService),
+            new TrackCommand(botService),
+            new UntrackCommand(botService)
         );
     }
 

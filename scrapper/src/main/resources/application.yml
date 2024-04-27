@@ -3,10 +3,18 @@ app:
     enable: true
     interval: 10s
     force-check-delay: 10s
+  database-access-type: jpa
 
 spring:
   application:
     name: scrapper
+  datasource:
+    url: jdbc:postgresql://localhost:5432/scrapper
+    username: postgres
+    password: postgres
+  jooq:
+    sql-dialect: postgres
+
 
 server:
   port: 8080

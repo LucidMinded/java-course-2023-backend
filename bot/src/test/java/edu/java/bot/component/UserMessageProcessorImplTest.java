@@ -9,7 +9,7 @@ import edu.java.bot.controller.ListCommand;
 import edu.java.bot.controller.StartCommand;
 import edu.java.bot.controller.TrackCommand;
 import edu.java.bot.controller.UntrackCommand;
-import edu.java.bot.service.Service;
+import edu.java.bot.service.BotService;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class UserMessageProcessorImplTest {
     List<? extends Command> commandsForHelp;
     List<? extends Command> commands;
-    @Mock private Service service;
+    @Mock private BotService botService;
     @Mock private Update update;
 
     private UserMessageProcessorImpl userMessageProcessor;
@@ -40,24 +40,22 @@ class UserMessageProcessorImplTest {
         mock(TrackCommand.class);
         mock(UntrackCommand.class);
 
-        URLParser urlParser = new URLParser();
-
         commandsForHelp = List.of(
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
+            new ListCommand(botService),
+            new StartCommand(botService),
+            new TrackCommand(botService),
+            new UntrackCommand(botService)
         );
 
         commands = List.of(
             new HelpCommand(commandsForHelp),
-            new ListCommand(service),
-            new StartCommand(service),
-            new TrackCommand(service, urlParser),
-            new UntrackCommand(service, urlParser)
+            new ListCommand(botService),
+            new StartCommand(botService),
+            new TrackCommand(botService),
+            new UntrackCommand(botService)
         );
 
-        userMessageProcessor = new UserMessageProcessorImpl(commands, service);
+        userMessageProcessor = new UserMessageProcessorImpl(commands, botService);
     }
 
     @Test
@@ -65,7 +63,7 @@ class UserMessageProcessorImplTest {
         // Arrange
         setUp();
         when(update.message().text()).thenReturn("/unknown");
-        when(service.isUserRegistered(1L)).thenReturn(true);
+        when(botService.isChatRegistered(1L)).thenReturn(true);
 
         // Act
         String resultMessageText = getMessageText(userMessageProcessor.process(update));
@@ -79,7 +77,7 @@ class UserMessageProcessorImplTest {
         // Arrange
         setUp();
         when(update.message().text()).thenReturn("/start");
-        when(service.isUserRegistered(1L)).thenReturn(false);
+        when(botService.isChatRegistered(1L)).thenReturn(false);
 
         // Act
         String resultMessageText = getMessageText(userMessageProcessor.process(update));
@@ -93,7 +91,7 @@ class UserMessageProcessorImplTest {
         // Arrange
         setUp();
         when(update.message().text()).thenReturn("/track");
-        when(service.isUserRegistered(1L)).thenReturn(false);
+        when(botService.isChatRegistered(1L)).thenReturn(false);
 
         // Act
         String resultMessageText = getMessageText(userMessageProcessor.process(update));

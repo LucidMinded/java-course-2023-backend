@@ -33,49 +33,50 @@ public class StackoverflowClientTest {
     public void test() {
         StackoverflowClient stackoverflowClientLocal = ClientConfiguration.stackoverflowClient("http://localhost:8080");
 
-        stubFor(get(urlEqualTo("/questions/1732348"))
+        stubFor(get(urlEqualTo("/questions/1732348?site=stackoverflow"))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "application/json")
-                .withBody("{\n" +
-                    "  \"items\": [\n" +
-                    "    {\n" +
-                    "      \"tags\": [\n" +
-                    "        \"html\",\n" +
-                    "        \"regex\",\n" +
-                    "        \"xhtml\"\n" +
-                    "      ],\n" +
-                    "      \"owner\": {\n" +
-                    "        \"account_id\": 47944,\n" +
-                    "        \"reputation\": 6064,\n" +
-                    "        \"user_id\": 142233,\n" +
-                    "        \"user_type\": \"registered\",\n" +
-                    "        \"accept_rate\": 100,\n" +
-                    "        \"profile_image\": \"https://i.stack.imgur.com/3h2RG.png?s=256&g=1\",\n" +
-                    "        \"display_name\": \"Jeff\",\n" +
-                    "        \"link\": \"https://stackoverflow.com/users/142233/jeff\"\n" +
-                    "      },\n" +
-                    "      \"is_answered\": true,\n" +
-                    "      \"view_count\": 3774367,\n" +
-                    "      \"protected_date\": 1291642187,\n" +
-                    "      \"accepted_answer_id\": 1732454,\n" +
-                    "      \"answer_count\": 37,\n" +
-                    "      \"community_owned_date\": 1258593236,\n" +
-                    "      \"score\": 2233,\n" +
-                    "      \"locked_date\": 1339098076,\n" +
-                    "      \"last_activity_date\": 1707758657,\n" +
-                    "      \"creation_date\": 1258151906,\n" +
-                    "      \"last_edit_date\": 1705914929,\n" +
-                    "      \"question_id\": 1732348,\n" +
-                    "      \"content_license\": \"CC BY-SA 4.0\",\n" +
-                    "      \"link\": \"https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags\",\n" +
-                    "      \"title\": \"RegEx match open tags except XHTML self-contained tags\"\n" +
-                    "    }\n" +
-                    "  ],\n" +
-                    "  \"has_more\": false,\n" +
-                    "  \"quota_max\": 10000,\n" +
-                    "  \"quota_remaining\": 9986\n" +
-                    "}")));
+                .withBody("""
+                    {
+                      "items": [
+                        {
+                          "tags": [
+                            "html",
+                            "regex",
+                            "xhtml"
+                          ],
+                          "owner": {
+                            "account_id": 47944,
+                            "reputation": 6064,
+                            "user_id": 142233,
+                            "user_type": "registered",
+                            "accept_rate": 100,
+                            "profile_image": "https://i.stack.imgur.com/3h2RG.png?s=256&g=1",
+                            "display_name": "Jeff",
+                            "link": "https://stackoverflow.com/users/142233/jeff"
+                          },
+                          "is_answered": true,
+                          "view_count": 3774367,
+                          "protected_date": 1291642187,
+                          "accepted_answer_id": 1732454,
+                          "answer_count": 37,
+                          "community_owned_date": 1258593236,
+                          "score": 2233,
+                          "locked_date": 1339098076,
+                          "last_activity_date": 1707758657,
+                          "creation_date": 1258151906,
+                          "last_edit_date": 1705914929,
+                          "question_id": 1732348,
+                          "content_license": "CC BY-SA 4.0",
+                          "link": "https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags",
+                          "title": "RegEx match open tags except XHTML self-contained tags"
+                        }
+                      ],
+                      "has_more": false,
+                      "quota_max": 10000,
+                      "quota_remaining": 9986
+                    }""")));
 
         QuestionDto questionDto = stackoverflowClientLocal.getQuestionResponse("1732348").getQuestions().getFirst();
         Assertions.assertEquals(OffsetDateTime.parse("2024-02-12T17:24:17Z"), questionDto.getLastActivityDate());
