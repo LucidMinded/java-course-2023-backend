@@ -1,4 +1,4 @@
-package edu.java.configuration;
+package edu.java.configuration.client;
 
 @SuppressWarnings("MultipleStringLiterals")
 public final class StackoverflowClientConfig {

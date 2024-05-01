@@ -1,4 +1,4 @@
-package edu.java.configuration;
+package edu.java.configuration.client;
 
 public class BotClientConfig {
     public static final String API_URL = "http://localhost:8090";

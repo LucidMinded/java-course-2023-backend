@@ -1,4 +1,4 @@
-package edu.java.configuration;
+package edu.java.configuration.client;
 
 public final class GithubClientConfig {
     public static final String API_URL = "https://api.github.com";

@@ -12,10 +12,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(
-    @NotEmpty
-    String telegramToken
-) {
+public record ApplicationConfig(@NotEmpty String telegramToken) {
     public static <S> S createClient(Class<S> clientClass, Map<String, String> headers, String baseUrl) {
         WebClient.Builder webclientBuilder = WebClient.builder().baseUrl(baseUrl);
         headers.forEach(webclientBuilder::defaultHeader);

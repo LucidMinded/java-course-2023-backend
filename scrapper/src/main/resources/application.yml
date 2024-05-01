@@ -1,9 +1,14 @@
 app:
   scheduler:
     enable: true
-    interval: 10s
-    force-check-delay: 10s
+    interval: 1m
+    force-check-delay: 1m
   database-access-type: jpa
+  retry-config:
+    interval: 2s
+    max-attempts: 3
+    status-codes: 500,502,503,504
+    strategy: linear
 
 spring:
   application:
@@ -14,7 +19,26 @@ spring:
     password: postgres
   jooq:
     sql-dialect: postgres
+  liquibase:
+    enabled: false
+  cache:
+    caffeine:
+      spec: maximumSize=1000000,expireAfterAccess=3600s
+    cache-names:
+      - rate-limit-buckets
 
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: rate-limit-buckets
+      url: /links/*
+      http-response-body: "{ \"status\": 429, \"error\": \"Too Many Requests\" }"
+      rate-limits:
+        - cache-key: getRemoteAddr()
+          bandwidths:
+            - capacity: 100
+              time: 1
+              unit: minutes
 
 server:
   port: 8080

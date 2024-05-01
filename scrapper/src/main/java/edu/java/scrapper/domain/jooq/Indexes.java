@@ -29,7 +29,8 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
-    public static final Index CHAT_LINK_LINK_ID_INDEX = Internal.createIndex(DSL.name("CHAT_LINK_LINK_ID_INDEX"),
+    public static final Index CHAT_LINK_LINK_ID_INDEX = Internal.createIndex(
+        DSL.name("CHAT_LINK_LINK_ID_INDEX"),
         ChatLink.CHAT_LINK,
         new OrderField[] {ChatLink.CHAT_LINK.LINK_ID},
         false
