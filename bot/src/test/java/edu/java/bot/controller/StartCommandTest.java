@@ -3,6 +3,7 @@ package edu.java.bot.controller;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import edu.java.bot.controller.telegram.StartCommand;
 import edu.java.bot.service.BotService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

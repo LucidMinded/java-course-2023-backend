@@ -4,7 +4,6 @@ import edu.java.GithubPathParser;
 import edu.java.StackoverflowPathParser;
 import edu.java.TrackedLink;
 import edu.java.URLParser;
-import edu.java.client.bot.BotClient;
 import edu.java.client.github.GithubClient;
 import edu.java.client.github.dto.RepositoryEventDto;
 import edu.java.client.stackoverflow.StackoverflowClient;
@@ -30,9 +29,9 @@ public class LinkUpdaterImpl implements LinkUpdater {
     private final ApplicationConfig applicationConfig;
     private final GithubClient githubClient;
     private final StackoverflowClient stackoverflowClient;
-    private final BotClient botClient;
     private final LinkService linkService;
     private final ChatService chatService;
+    private final SendUpdateService sendUpdateService;
 
     private final Map<String, BiFunction<LinkDto, URLParser.ParsedURL, Boolean>> updaters = Map.of(
         TrackedLink.GITHUB.getHost(), this::githubUpdate,
@@ -79,7 +78,7 @@ public class LinkUpdaterImpl implements LinkUpdater {
             log.info("Received stackoverflow response: {}", responseDto);
             OffsetDateTime responseLastActivity = responseDto.getQuestions().getFirst().getLastActivityDate();
             if (responseLastActivity.isAfter(link.getLastActivity())) {
-                botClient.updates(new LinkUpdateRequest(
+                sendUpdateService.sendUpdate(new LinkUpdateRequest(
                     link.getId(),
                     link.getUrl(),
                     responseDto.toString(),
@@ -108,7 +107,7 @@ public class LinkUpdaterImpl implements LinkUpdater {
                 }
                 if (event.getCreatedAt().isAfter(link.getLastActivity())) {
                     log.info("Received github event: {}", event);
-                    botClient.updates(new LinkUpdateRequest(
+                    sendUpdateService.sendUpdate(new LinkUpdateRequest(
                         link.getId(),
                         link.getUrl(),
                         event.toString(),
