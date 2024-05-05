@@ -4,11 +4,11 @@ import edu.java.bot.client.ScrapperClient;
 import edu.java.dto.scrapper.request.AddLinkRequest;
 import edu.java.dto.scrapper.request.RemoveLinkRequest;
 import edu.java.dto.scrapper.response.LinkResponse;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BotService {
     private final ScrapperClient scrapperClient;
 

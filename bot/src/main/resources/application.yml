@@ -1,11 +1,19 @@
 app:
   telegram-token: ${TOKEN}
+  kafka-config:
+    group-id: group1
+    topic: updates
+    bootstrap-servers: localhost:9092
 
 spring:
   application:
     name: bot
   jackson:
     time-zone: UTC
+  kafka:
+    consumer:
+      properties:
+        spring.json.trusted.packages: '*'
 
 server:
   port: 8090

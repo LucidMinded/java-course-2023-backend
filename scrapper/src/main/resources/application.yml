@@ -9,6 +9,11 @@ app:
     max-attempts: 3
     status-codes: 500,502,503,504
     strategy: linear
+  kafka-config:
+    group-id: group1
+    topic: updates
+    bootstrap-servers: localhost:9092
+  use-queue: true
 
 spring:
   application:

@@ -1,7 +1,6 @@
-package edu.java.bot.controller;
+package edu.java.bot.controller.rest;
 
-import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.component.MyTelegramBot;
+import edu.java.bot.service.UpdateHandlingService;
 import edu.java.dto.bot.request.LinkUpdateRequest;
 import edu.java.dto.bot.response.ApiErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class BotController {
-    private final MyTelegramBot myTelegramBot;
+    private final UpdateHandlingService updateHandlingService;
 
     @Operation(summary = "Отправить обновление", description = "", tags = {})
     @ApiResponses(value = {
@@ -30,16 +28,6 @@ public class BotController {
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping("/updates")
     public void updates(@Valid @RequestBody LinkUpdateRequest linkUpdateRequest) {
-        String description = linkUpdateRequest.getDescription();
-        List<Long> chatIds = linkUpdateRequest.getTgChatIds();
-        String url = linkUpdateRequest.getUrl();
-
-        for (Long chatId : chatIds) {
-            // send message to chat with chatId
-            myTelegramBot.execute(new SendMessage(
-                chatId,
-                "There is an update at " + url + "\n\nDetails:\n" + description
-            ));
-        }
+        updateHandlingService.handleLinkUpdate(linkUpdateRequest);
     }
 }

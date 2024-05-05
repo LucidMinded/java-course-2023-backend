@@ -2,7 +2,7 @@ package edu.java.bot.component;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.controller.Command;
+import edu.java.bot.controller.telegram.Command;
 import edu.java.bot.service.BotService;
 import edu.java.bot.util.BotUtils;
 import java.util.List;

@@ -11,13 +11,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 public record ApplicationConfig(@NotNull Scheduler scheduler, @NotNull AccessType databaseAccessType,
-                                @NotNull RetryConfig retryConfig) {
-    @Bean public Scheduler scheduler() {
-        return scheduler;
-    }
+                                @NotNull RetryConfig retryConfig, @NotNull KafkaConfig kafkaConfig,
+                                boolean useQueue) {
 
     public Duration getUpdateRequestInterval() {
         return Duration.ofMinutes(1);
+    }
+
+    @Bean
+    public Scheduler scheduler() {
+        return scheduler;
     }
 
     @Bean
@@ -25,10 +28,18 @@ public record ApplicationConfig(@NotNull Scheduler scheduler, @NotNull AccessTyp
         return retryConfig;
     }
 
+    @Bean
+    public KafkaConfig kafkaConfig() {
+        return kafkaConfig;
+    }
+
     public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration forceCheckDelay) {
     }
 
     public record RetryConfig(int maxAttempts, @NotNull Duration interval, @NotNull String strategy,
                               @NotNull List<Integer> statusCodes) {
+    }
+
+    public record KafkaConfig(@NotNull String topic, @NotNull String groupId, @NotNull String bootstrapServers) {
     }
 }
