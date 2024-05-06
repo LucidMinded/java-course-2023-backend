@@ -3,16 +3,50 @@
 
 # Link Tracker
 
-ФИО: Ратников Илья Андреевич
+## Project Overview
 
-Приложение для отслеживания обновлений контента по ссылкам.
-При появлении новых событий отправляется уведомление в Telegram.
+Link Tracker is an application designed to monitor content updates at specified URLs and send notifications to Telegram when new events are detected.
 
-Проект написан на `Java 21` с использованием `Spring Boot 3`.
+## Features
 
-Проект состоит из 2-х приложений:
+- **Telegram Bot**: Sends notifications to Telegram when tracked content updates.
+- **Scraper**: Monitors specified URLs for content changes.
 
-* Bot
-* Scrapper
+## Requirements
 
-Для работы требуется БД `PostgreSQL`. Присутствует опциональная зависимость на `Kafka`.
+- Java 21
+- Spring Boot 3
+- Docker
+
+## Installation
+
+Clone the repository and navigate to the project directory:
+
+```bash
+git clone https://github.com/LucidMinded/java-course-2023-backend.git
+cd java-course-2023-backend
+```
+
+To build the project, use the following command:
+
+```bash
+./mvnw clean package -DskipTests
+```
+
+To start the application, use the following commands:
+
+Windows:
+```cmd
+./run.cmd <your-bot-telegram-token>
+```
+
+Linux/MacOS:
+```bash
+docker-compose up -d
+java -jar scrapper/target/scrapper.jar
+export TOKEN=<your-bot-telegram & java -jar ./bot/target/bot.jar
+```
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request with your changes.
