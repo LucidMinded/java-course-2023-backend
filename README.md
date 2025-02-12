@@ -44,7 +44,7 @@ Linux/MacOS:
 ```bash
 docker-compose up -d
 java -jar scrapper/target/scrapper.jar
-export TOKEN=<your-bot-telegram & java -jar ./bot/target/bot.jar
+export TOKEN=<your-bot-telegram-token> & java -jar ./bot/target/bot.jar
 ```
 
 ## Contributing
