@@ -2,6 +2,7 @@ package edu.java.dto.bot.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ApiErrorResponse {
+public class ApiErrorResponse implements Serializable {
     @JsonProperty("description")
     private String description;
 

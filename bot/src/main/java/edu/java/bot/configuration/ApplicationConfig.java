@@ -2,6 +2,7 @@ package edu.java.bot.configuration;
 
 import edu.java.bot.client.ScrapperClient;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +13,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(
-    @NotEmpty
-    String telegramToken
-) {
+public record ApplicationConfig(@NotEmpty String telegramToken, @NotNull KafkaConfig kafkaConfig) {
     public static <S> S createClient(Class<S> clientClass, Map<String, String> headers, String baseUrl) {
         WebClient.Builder webclientBuilder = WebClient.builder().baseUrl(baseUrl);
         headers.forEach(webclientBuilder::defaultHeader);
@@ -26,7 +24,7 @@ public record ApplicationConfig(
         return clientFactory.createClient(clientClass);
     }
 
-    public ScrapperClient botClient(String botUrl) {
+    public ScrapperClient scrapperClient(String botUrl) {
         return createClient(ScrapperClient.class, Map.of(
             "Content-Type", ScrapperClientConfig.CONTENT_TYPE,
             "Accept", ScrapperClientConfig.ACCEPT
@@ -34,7 +32,15 @@ public record ApplicationConfig(
     }
 
     @Bean
-    public ScrapperClient botClient() {
-        return botClient(ScrapperClientConfig.API_URL);
+    public ScrapperClient scrapperClient() {
+        return scrapperClient(ScrapperClientConfig.API_URL);
+    }
+
+    @Bean
+    public KafkaConfig kafkaConfig() {
+        return kafkaConfig;
+    }
+
+    public record KafkaConfig(@NotNull String topic, @NotNull String groupId, @NotNull String bootstrapServers) {
     }
 }

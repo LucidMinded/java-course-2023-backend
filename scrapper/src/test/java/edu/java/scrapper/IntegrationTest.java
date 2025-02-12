@@ -30,7 +30,8 @@ public abstract class IntegrationTest {
         runMigrations(POSTGRES);
     }
 
-    @SneakyThrows private static void runMigrations(JdbcDatabaseContainer<?> c) {
+    @SneakyThrows
+    private static void runMigrations(JdbcDatabaseContainer<?> c) {
         Database database = DatabaseFactory.getInstance().
             findCorrectDatabaseImplementation(new JdbcConnection(c.createConnection("")));
 
@@ -47,10 +48,18 @@ public abstract class IntegrationTest {
             .execute();
     }
 
-    @DynamicPropertySource static void jdbcProperties(DynamicPropertyRegistry registry) {
+    @DynamicPropertySource
+    static void jdbcProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", POSTGRES::getJdbcUrl);
         registry.add("spring.datasource.username", POSTGRES::getUsername);
         registry.add("spring.datasource.password", POSTGRES::getPassword);
         registry.add("spring.liquibase.enabled", () -> "false");
+
+    }
+
+    @DynamicPropertySource
+    static void otherProperties(DynamicPropertyRegistry registry) {
+        registry.add("bucket4j.enabled", () -> "false");
+        registry.add("spring.cache.type", () -> "none");
     }
 }

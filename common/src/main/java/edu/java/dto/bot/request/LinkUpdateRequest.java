@@ -1,6 +1,7 @@
 package edu.java.dto.bot.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinkUpdateRequest {
+public class LinkUpdateRequest implements Serializable {
     @JsonProperty("id") private Long id;
     @JsonProperty("url") private String url;
     @JsonProperty("description") private String description;
